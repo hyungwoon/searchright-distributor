@@ -24,6 +24,8 @@
 searchright-distributor/
 ├── agents/
 │   └── content-distribution.md       # 에이전트 시스템 프롬프트
+├── docs/
+│   └── company-profile.md            # 서치라이트AI 기업 프로필 (기업 메모리)
 ├── plugins/
 │   └── content-distribution/
 │       └── skills/
