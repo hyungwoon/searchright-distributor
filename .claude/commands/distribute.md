@@ -16,12 +16,13 @@ argument-hint: "<blog post URL> [채널: linkedin,newsletter,naver,brunch,facebo
 
 ## 실행 절차 (순서 엄수, 생략 불가)
 
-### 0단계: 에이전트 + 스킬 로드
+### 0단계: 에이전트 + 스킬 + 기업 메모리 로드
 
-다음 3개 파일을 병렬로 Read:
+다음 4개 파일을 병렬로 Read:
 - `agents/content-distribution.md`
 - `plugins/content-distribution/skills/channel-adaptation/SKILL.md`
 - `plugins/content-distribution/skills/seo-geo-optimization/SKILL.md`
+- `docs/company-profile.md` — 시장 데이터, 경쟁 포지셔닝, 성과 지표, 브랜드 키워드 등 콘텐츠 보강 소스
 
 ### 1단계: URL Fetch
 
@@ -177,7 +178,7 @@ output/YYYY-MM-DD_[slug]/06_blind.md
 
 ## 검증 체크리스트 (저장 전 자가 확인)
 
-- [ ] 에이전트 + 스킬 파일 3개를 실제로 Read 했는가?
+- [ ] 에이전트 + 스킬 파일 3개 + company-profile.md를 실제로 Read 했는가?
 - [ ] 원본 URL 실제 fetch 여부 (추정 작성 절대 금지)
 - [ ] 퍼널 분류(TOFU/MOFU/BOFU) 수행 여부
 - [ ] 퍼널에 따른 톤·CTA 조정이 채널별로 반영되었는가?
