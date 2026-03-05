@@ -1,0 +1,421 @@
+<!--
+  서치라이트AI 블로그 CTA 배너 — Embed Snippet v2
+
+  사용법:
+  1. 이 스니펫 전체를 블로그 아티클 템플릿의 </body> 직전에 삽입
+  2. 아티클 본문 컨테이너의 selector를 CONFIG.articleSelector에 맞게 수정
+  3. CTA 링크를 CONFIG.ctaLink에 설정
+
+  동작:
+  - 하단 배너: 아티클 본문 직후, 항상 3종 중 1개 랜덤 표시
+  - 사이드 배너: 스크롤 50% 지점에서 좌측 하단 슬라이드인 (하단과 다른 variant)
+    → 닫기 버튼으로 dismiss, 같은 세션 내 재노출 안 함
+  - 모바일(768px 이하)에서는 사이드 배너 비활성
+-->
+
+<!-- ============================================================ -->
+<!-- 스타일 -->
+<!-- ============================================================ -->
+<style>
+/* ── Reset ── */
+.sr-banner *, .sr-side * {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+/* ================================================================
+   하단 배너 (Bottom Banner)
+   ================================================================ */
+.sr-banner {
+  width: 100%;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', sans-serif;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.sr-banner.sr-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* — Light — */
+.sr-banner--light {
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+.sr-banner--light .sr-banner__headline { color: #0f172a; }
+.sr-banner--light .sr-banner__subcopy  { color: #475569; }
+.sr-banner--light .sr-banner__stat-value { color: #2463EB; }
+.sr-banner--light .sr-banner__stat-label { color: #64748b; }
+.sr-banner--light .sr-banner__divider  { background: #e2e8f0; }
+.sr-banner--light .sr-banner__cta {
+  background: #2463EB; color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.sr-banner--light .sr-banner__cta:hover {
+  background: #1d56d0;
+  box-shadow: 0 4px 12px rgba(36,99,235,0.3);
+}
+
+/* — Brand — */
+.sr-banner--brand {
+  background: #1e3a8a;
+  border-radius: 16px;
+}
+.sr-banner--brand .sr-banner__headline  { color: #fff; }
+.sr-banner--brand .sr-banner__subcopy   { color: #93c5fd; }
+.sr-banner--brand .sr-banner__stat-value { color: #fff; }
+.sr-banner--brand .sr-banner__stat-label { color: #60a5fa; }
+.sr-banner--brand .sr-banner__divider   { background: #1e40af; }
+.sr-banner--brand .sr-banner__cta {
+  background: #fff; color: #1e3a8a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.sr-banner--brand .sr-banner__cta:hover {
+  background: #eff6ff;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+}
+
+/* — Outlined — */
+.sr-banner--outlined {
+  background: #fff;
+  border: 2px solid #dbeafe;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  margin: 0 auto;
+}
+.sr-banner--outlined .sr-banner__headline  { color: #0f172a; }
+.sr-banner--outlined .sr-banner__subcopy   { color: #475569; }
+.sr-banner--outlined .sr-banner__stat-value { color: #2463EB; }
+.sr-banner--outlined .sr-banner__stat-label { color: #64748b; }
+.sr-banner--outlined .sr-banner__divider   { background: #f1f5f9; }
+.sr-banner--outlined .sr-banner__cta {
+  background: #2463EB; color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.sr-banner--outlined .sr-banner__cta:hover {
+  background: #1d56d0;
+  box-shadow: 0 4px 12px rgba(36,99,235,0.3);
+}
+
+/* — 공통 요소 — */
+.sr-banner__content {
+  max-width: 640px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.sr-banner__headline {
+  font-size: 24px; font-weight: 700;
+  line-height: 1.35; letter-spacing: -0.02em;
+}
+.sr-banner__subcopy {
+  font-size: 16px; line-height: 1.6;
+}
+.sr-banner__stats {
+  display: flex; align-items: center;
+  justify-content: center; gap: 32px;
+}
+.sr-banner__stat {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px; min-width: 100px;
+}
+.sr-banner__stat-value { font-size: 24px; font-weight: 700; }
+.sr-banner__stat-label { font-size: 13px; font-weight: 500; }
+.sr-banner__divider   { width: 1px; height: 32px; }
+
+.sr-banner__cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 14px 32px;
+  font-size: 15px; font-weight: 600;
+  border-radius: 12px; border: none; cursor: pointer;
+  text-decoration: none; transition: all 0.2s ease;
+}
+.sr-banner__cta:hover { transform: translateY(-1px); }
+.sr-banner__cta-arrow {
+  transition: transform 0.2s ease; width: 16px; height: 16px;
+}
+.sr-banner__cta:hover .sr-banner__cta-arrow { transform: translateX(4px); }
+
+/* — 반응형 — */
+@media (max-width: 640px) {
+  .sr-banner { padding: 32px 20px; gap: 24px; }
+  .sr-banner__headline { font-size: 20px; }
+  .sr-banner__subcopy  { font-size: 15px; }
+  .sr-banner__stats { display: none; }
+}
+
+/* ================================================================
+   사이드 슬라이드인 배너 (Side Banner)
+   ================================================================ */
+.sr-side {
+  position: fixed;
+  bottom: 24px;
+  left: -400px;               /* 초기: 화면 밖 (좌측) */
+  width: 340px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', sans-serif;
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s ease;
+  opacity: 0;
+}
+.sr-side.sr-side--visible {
+  left: 24px;
+  opacity: 1;
+}
+.sr-side.sr-side--hiding {
+  left: -400px;
+  opacity: 0;
+}
+
+.sr-side__card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+  position: relative;
+}
+
+/* 상단 액센트 바 */
+.sr-side__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 24px; right: 24px;
+  height: 3px;
+  background: #2463EB;
+  border-radius: 0 0 3px 3px;
+}
+
+/* 닫기 버튼 */
+.sr-side__close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 28px; height: 28px;
+  border: none; background: #f1f5f9;
+  border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+  color: #94a3b8;
+}
+.sr-side__close:hover { background: #e2e8f0; color: #475569; }
+.sr-side__close svg { width: 14px; height: 14px; }
+
+.sr-side__label {
+  font-size: 11px; font-weight: 700;
+  color: #2463EB; text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.sr-side__headline {
+  font-size: 17px; font-weight: 700;
+  color: #0f172a; line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.sr-side__subcopy {
+  font-size: 14px; color: #64748b;
+  line-height: 1.55;
+}
+.sr-side__cta {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 12px 20px;
+  background: #2463EB; color: #fff;
+  font-size: 14px; font-weight: 600;
+  border-radius: 10px; border: none; cursor: pointer;
+  text-decoration: none; transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(36,99,235,0.2);
+}
+.sr-side__cta:hover {
+  background: #1d56d0;
+  box-shadow: 0 4px 12px rgba(36,99,235,0.3);
+  transform: translateY(-1px);
+}
+.sr-side__cta-arrow {
+  width: 14px; height: 14px;
+  transition: transform 0.2s ease;
+}
+.sr-side__cta:hover .sr-side__cta-arrow { transform: translateX(3px); }
+
+/* 모바일에서는 사이드 배너 숨김 */
+@media (max-width: 768px) {
+  .sr-side { display: none !important; }
+}
+</style>
+
+<!-- ============================================================ -->
+<!-- 스크립트 -->
+<!-- ============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── 설정 ──────────────────────────────────────────────
+  var CONFIG = {
+    articleSelector: 'article, .post-content, .article-body, .entry-content, .tt_article_useless_p_margin',
+    ctaLink: 'https://searchright.net/request/?utm_source=blog&utm_medium=banner&utm_campaign=bottom_cta',
+    // 사이드 배너 트리거: 스크롤 진행률 (0~1)
+    sideShowAt: 0.5,
+  };
+
+  // ── 배너 데이터 (3종) ─────────────────────────────────
+  var BANNERS = [
+    {
+      variant: 'light',
+      headline: '아직도 채용 공고에 지원 안 하는\n66%의 인재를 놓치고 계신가요?',
+      subcopy: '서치라이트AI는 역량 메타데이터 기반 AI로 기존 플랫폼에서 검색되지 않는 핵심 인재를 발굴합니다.',
+      ctaText: '무료 상담 신청하기',
+      // 사이드 전용 (짧은 버전)
+      sideHeadline: '놓치고 있는 66%의 인재,\nAI로 찾아보세요',
+      sideSubcopy: '기존 플랫폼에서 검색되지 않는 핵심 인재를 발굴합니다.',
+      sideCtaText: '무료 상담 신청',
+    },
+    {
+      variant: 'brand',
+      headline: '검색되지 않는 인재,\nAI가 찾아드립니다',
+      subcopy: '메시지 회신율 40%, 업계 평균의 3배. 포지션에 딱 맞는 후보자 리스트를 받아보세요.',
+      ctaText: '우리 팀 채용, 상담받기',
+      sideHeadline: '회신율 40%,\n업계 평균의 3배',
+      sideSubcopy: '포지션에 딱 맞는 후보자 리스트를 받아보세요.',
+      sideCtaText: '상담받기',
+    },
+    {
+      variant: 'outlined',
+      headline: '80개+ 기업이 선택한\nAI 인재 발굴 솔루션',
+      subcopy: '헤드헌팅 대비 1/3 비용으로, 3배 더 높은 회신율. 지금 바로 경험해 보세요.',
+      ctaText: '도입 문의하기',
+      sideHeadline: '80개+ 기업이 선택한\nAI 인재 발굴',
+      sideSubcopy: '헤드헌팅 대비 1/3 비용, 3배 높은 회신율.',
+      sideCtaText: '도입 문의',
+    },
+  ];
+
+  var STATS = [
+    { value: '40%', label: '메시지 회신율' },
+    { value: '80개+', label: '누적 고객사' },
+    { value: '1/3', label: '헤드헌팅 대비 비용' },
+  ];
+
+  var ARROW_SVG = '<svg class="sr-banner__cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  var ARROW_SVG_SIDE = '<svg class="sr-side__cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+  // ── 하단 배너 HTML ────────────────────────────────────
+  function createBottomHTML(data) {
+    var link = CONFIG.ctaLink + '&utm_content=bottom';
+    var headlineHTML = data.headline.replace(/\n/g, '<br>');
+
+    var statsHTML = STATS.map(function (s, i) {
+      var div = i < STATS.length - 1 ? '<div class="sr-banner__divider"></div>' : '';
+      return '<div class="sr-banner__stat"><span class="sr-banner__stat-value">' + s.value + '</span><span class="sr-banner__stat-label">' + s.label + '</span></div>' + div;
+    }).join('');
+
+    return '<div class="sr-banner sr-banner--' + data.variant + '" data-sr-placement="bottom">' +
+      '<div class="sr-banner__content"><h2 class="sr-banner__headline">' + headlineHTML + '</h2>' +
+      '<p class="sr-banner__subcopy">' + data.subcopy + '</p></div>' +
+      '<div class="sr-banner__stats">' + statsHTML + '</div>' +
+      '<a href="' + link + '" class="sr-banner__cta" target="_blank" rel="noopener">' + data.ctaText + ARROW_SVG + '</a></div>';
+  }
+
+  // ── 사이드 배너 HTML ──────────────────────────────────
+  function createSideHTML(data) {
+    var link = CONFIG.ctaLink + '&utm_content=side';
+    var headlineHTML = data.sideHeadline.replace(/\n/g, '<br>');
+
+    return '<div class="sr-side" id="sr-side-banner">' +
+      '<div class="sr-side__card">' +
+        '<button class="sr-side__close" id="sr-side-close" aria-label="닫기">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+        '<span class="sr-side__label">서치라이트AI</span>' +
+        '<h3 class="sr-side__headline">' + headlineHTML + '</h3>' +
+        '<p class="sr-side__subcopy">' + data.sideSubcopy + '</p>' +
+        '<a href="' + link + '" class="sr-side__cta" target="_blank" rel="noopener">' + data.sideCtaText + ARROW_SVG_SIDE + '</a>' +
+      '</div></div>';
+  }
+
+  // ── 랜덤 선택 (중복 방지) ─────────────────────────────
+  function pickTwo() {
+    var indices = [0, 1, 2];
+    var first = indices.splice(Math.floor(Math.random() * indices.length), 1)[0];
+    var second = indices[Math.floor(Math.random() * indices.length)];
+    return { bottom: first, side: second };
+  }
+
+  // ── Intersection Observer: 하단 배너 페이드인 ─────────
+  function observeBottom() {
+    var el = document.querySelector('.sr-banner');
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) { el.classList.add('sr-visible'); return; }
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('sr-visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(el);
+  }
+
+  // ── 스크롤 기반: 사이드 배너 트리거 ───────────────────
+  function initSideBanner() {
+    var sideEl = document.getElementById('sr-side-banner');
+    var closeBtn = document.getElementById('sr-side-close');
+    if (!sideEl || !closeBtn) return;
+
+    // 세션 내 dismiss 체크
+    if (sessionStorage.getItem('sr-side-dismissed')) return;
+
+    var shown = false;
+    var dismissed = false;
+
+    function onScroll() {
+      if (dismissed) return;
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = docHeight > 0 ? scrollTop / docHeight : 0;
+
+      if (!shown && progress >= CONFIG.sideShowAt) {
+        sideEl.classList.add('sr-side--visible');
+        shown = true;
+      }
+    }
+
+    closeBtn.addEventListener('click', function () {
+      dismissed = true;
+      sideEl.classList.remove('sr-side--visible');
+      sideEl.classList.add('sr-side--hiding');
+      sessionStorage.setItem('sr-side-dismissed', '1');
+      window.removeEventListener('scroll', onScroll);
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // 초기 체크 (이미 스크롤된 상태일 수 있음)
+    onScroll();
+  }
+
+  // ── 메인 ──────────────────────────────────────────────
+  function init() {
+    var article = document.querySelector(CONFIG.articleSelector);
+    if (!article) return;
+
+    var picks = pickTwo();
+
+    // 1) 하단 배너
+    article.insertAdjacentHTML('afterend', createBottomHTML(BANNERS[picks.bottom]));
+    observeBottom();
+
+    // 2) 사이드 배너
+    document.body.insertAdjacentHTML('beforeend', createSideHTML(BANNERS[picks.side]));
+    initSideBanner();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

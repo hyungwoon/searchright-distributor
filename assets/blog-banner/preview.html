@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서치라이트AI 블로그 배너 프리뷰</title>
+  <style>
+    /* === 프리뷰 전용 스타일 === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .preview-header {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 16px 24px;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .preview-header h1 {
+      font-size: 16px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .preview-header h1 span { color: #94a3b8; font-weight: 400; }
+    .preview-controls { display: flex; gap: 8px; align-items: center; }
+    .preview-controls .badge {
+      font-size: 12px; padding: 4px 10px;
+      background: #dbeafe; color: #2463EB;
+      border-radius: 999px; font-weight: 600;
+    }
+    .preview-controls button {
+      padding: 8px 16px; border: 1px solid #e2e8f0;
+      background: #fff; border-radius: 8px; cursor: pointer;
+      font-size: 13px; font-weight: 500; transition: all 0.15s;
+    }
+    .preview-controls button:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+    .blog-container {
+      max-width: 720px; margin: 0 auto; padding: 40px 24px 80px;
+    }
+    .blog-meta { margin-bottom: 32px; }
+    .blog-meta .category {
+      font-size: 13px; font-weight: 600; color: #2463EB;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;
+    }
+    .blog-meta h2 {
+      font-size: 28px; font-weight: 800; line-height: 1.35;
+      margin-bottom: 12px; letter-spacing: -0.02em;
+    }
+    .blog-meta .date { font-size: 14px; color: #94a3b8; }
+
+    .article-body p {
+      font-size: 16px; line-height: 1.8; color: #334155; margin-bottom: 20px;
+    }
+    .article-body h3 {
+      font-size: 20px; font-weight: 700; margin: 36px 0 16px; color: #0f172a;
+    }
+    .article-body .placeholder-img {
+      width: 100%; height: 200px; background: #e2e8f0; border-radius: 12px;
+      margin: 24px 0; display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 14px;
+    }
+
+    .blog-footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid #e2e8f0; }
+    .blog-footer .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .blog-footer .tag {
+      font-size: 13px; padding: 4px 12px; background: #f1f5f9;
+      color: #64748b; border-radius: 999px;
+    }
+
+    .comments-placeholder {
+      max-width: 720px; margin: 24px auto; padding: 40px 24px;
+      background: #fff; border-radius: 12px; border: 1px solid #e2e8f0;
+      text-align: center; color: #94a3b8; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 프리뷰 헤더 -->
+  <div class="preview-header">
+    <h1>
+      <div style="width:20px;height:20px;background:#2463EB;border-radius:5px;"></div>
+      서치라이트AI <span>Blog Banner Preview v2</span>
+    </h1>
+    <div class="preview-controls">
+      <span class="badge">하단 + 사이드 슬라이드인</span>
+      <button onclick="sessionStorage.removeItem('sr-side-dismissed');location.reload()">새로고침 (랜덤 변경)</button>
+    </div>
+  </div>
+
+  <!-- 블로그 시뮬레이션 -->
+  <div class="blog-container">
+    <div class="blog-meta">
+      <div class="category">HR 인사이트</div>
+      <h2>다이렉트 소싱, 왜 지금 해야 하는가 — 2026년 채용 트렌드 분석</h2>
+      <div class="date">2026.02.26 · 서치라이트AI</div>
+    </div>
+
+    <div class="article-body">
+      <p>채용 시장의 구조가 바뀌고 있습니다. 2024년 하반기 고용노동부 조사에 따르면, 경력직 채용에서 다이렉트 소싱을 활용하는 기업의 비율이 51.2%를 돌파했습니다. 이제 과반수의 기업이 '공고를 올리고 기다리는' 방식에서 벗어나, 직접 인재를 찾아 나서고 있는 것입니다.</p>
+
+      <p>이 변화의 배경에는 소극적 구직자의 존재가 있습니다. 리멤버 리서치(2023)에 따르면, 현직에서 일하고 있는 인재 중 66%는 적극적으로 구직 활동을 하지 않습니다. 이들은 채용 공고를 보지 않고, 이력서를 올리지 않으며, 헤드헌터의 연락에도 쉽게 응하지 않습니다.</p>
+
+      <h3>왜 기존 방식이 한계에 부딪히는가</h3>
+
+      <p>전통적인 채용 방식은 크게 두 가지입니다. 첫째, 채용 공고를 게시하고 지원을 기다리는 인바운드 방식. 둘째, 헤드헌터에게 수수료를 지불하고 후보자를 추천받는 방식. 두 방식 모두 한계가 명확합니다.</p>
+
+      <p>인바운드 방식은 적극적 구직자(전체의 34%)만을 대상으로 합니다. 나머지 66%의 인재풀에는 접근조차 할 수 없는 구조입니다. 특히 시니어급, C-level, 테크 리드와 같은 희소 포지션일수록 이 문제는 심각해집니다. 이들은 현재 직장에서 높은 만족도를 보이고 있어 자발적 이직 동기가 낮기 때문입니다.</p>
+
+      <p>헤드헌팅은 이 문제를 일부 해결하지만, 비용이 문제입니다. 통상 계약 연봉의 20~25%라는 수수료는 스타트업에게는 부담이 될 수 있고, 채용 건수가 늘어날수록 비용이 기하급수적으로 증가합니다.</p>
+
+      <div class="placeholder-img">[이미지: 채용 방식별 비용 비교 차트]</div>
+
+      <h3>다이렉트 소싱의 핵심: 역량 메타데이터</h3>
+
+      <p>다이렉트 소싱이 효과적이려면, '누구에게 연락할 것인가'를 정확히 판단할 수 있어야 합니다. 여기서 핵심이 되는 것이 역량 메타데이터입니다. 단순히 이름, 직함, 회사명 같은 기본 정보가 아니라, 실제로 어떤 프로젝트를 이끌었는지, 어떤 기술적 의사결정을 내렸는지, 어떤 성과를 만들어냈는지와 같은 깊이 있는 역량 정보를 뜻합니다.</p>
+
+      <p>문제는 이런 정보가 기존 채용 플랫폼의 검색 필터로는 잡히지 않는다는 점입니다. '리액트 5년 이상'으로 검색하면 수천 명이 나오지만, '대규모 트래픽 환경에서 프론트엔드 아키텍처를 설계한 경험이 있는 시니어'를 찾기는 사실상 불가능합니다.</p>
+
+      <h3>AI가 바꾸는 게임의 룰</h3>
+
+      <p>AI 기술, 특히 LLM(Large Language Model)과 RAG(Retrieval-Augmented Generation) 기술의 발전은 이 문제를 근본적으로 해결할 수 있는 가능성을 열었습니다. 다양한 소스에 흩어져 있는 인재의 경력 정보를 수집하고, 이를 구조화된 역량 메타데이터로 증강하여, 기존에는 '검색 불가능'했던 인재를 발굴할 수 있게 된 것입니다.</p>
+
+      <p>실제로 이 방식을 적용한 기업들의 결과는 인상적입니다. AI 기반 초개인화 메시지의 회신율은 40%에 달하며, 이는 일반적인 콜드 메시지 회신율(10~15%)의 약 3배 수준입니다. 커피챗 성사율 역시 13%로, 다이렉트 소싱 기준으로 높은 전환율을 보이고 있습니다.</p>
+
+      <h3>실행을 위한 체크리스트</h3>
+
+      <p>다이렉트 소싱 도입을 검토하고 있다면, 다음 세 가지를 먼저 점검해 보세요. 첫째, 현재 채용 파이프라인에서 시니어급 후보자의 비율이 충분한가? 둘째, 헤드헌팅 비용 대비 실제 채용 성공률은 어떠한가? 셋째, 내부 리크루터가 소싱에 투입하는 시간 대비 결과물은 만족스러운가?</p>
+
+      <p>이 질문 중 하나라도 '아니오'라면, 지금이 다이렉트 소싱 프로세스를 재설계할 시점입니다. 채용 공고로는 만날 수 없는 66%의 인재를, 어떻게 우리 팀에 합류시킬 것인지 — 그 답은 데이터와 AI에 있습니다.</p>
+    </div>
+
+    <div class="blog-footer">
+      <div class="tags">
+        <span class="tag">#다이렉트소싱</span>
+        <span class="tag">#AI채용</span>
+        <span class="tag">#핵심인재</span>
+        <span class="tag">#소극적구직자</span>
+        <span class="tag">#HR트렌드</span>
+        <span class="tag">#경력직채용</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 댓글 영역 -->
+  <div class="comments-placeholder">댓글 · 추천 글 영역</div>
+
+  <!-- ========================================================== -->
+  <!-- 임베드 스니펫 시작 -->
+  <!-- ========================================================== -->
+  <style>
+  /* ── Reset ── */
+  .sr-banner *, .sr-side * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  /* ================================================================
+     하단 배너
+     ================================================================ */
+  .sr-banner {
+    width: 100%;
+    padding: 40px 32px;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center; gap: 28px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', sans-serif;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .sr-banner.sr-visible { opacity: 1; transform: translateY(0); }
+
+  /* Light */
+  .sr-banner--light {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 16px;
+  }
+  .sr-banner--light .sr-banner__headline  { color: #0f172a; }
+  .sr-banner--light .sr-banner__subcopy   { color: #475569; }
+  .sr-banner--light .sr-banner__stat-value { color: #2463EB; }
+  .sr-banner--light .sr-banner__stat-label { color: #64748b; }
+  .sr-banner--light .sr-banner__divider   { background: #e2e8f0; }
+  .sr-banner--light .sr-banner__cta {
+    background: #2463EB; color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .sr-banner--light .sr-banner__cta:hover {
+    background: #1d56d0;
+    box-shadow: 0 4px 12px rgba(36,99,235,0.3);
+  }
+
+  /* Brand */
+  .sr-banner--brand {
+    background: #1e3a8a;
+    border-radius: 16px;
+  }
+  .sr-banner--brand .sr-banner__headline  { color: #fff; }
+  .sr-banner--brand .sr-banner__subcopy   { color: #93c5fd; }
+  .sr-banner--brand .sr-banner__stat-value { color: #fff; }
+  .sr-banner--brand .sr-banner__stat-label { color: #60a5fa; }
+  .sr-banner--brand .sr-banner__divider   { background: #1e40af; }
+  .sr-banner--brand .sr-banner__cta {
+    background: #fff; color: #1e3a8a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .sr-banner--brand .sr-banner__cta:hover {
+    background: #eff6ff;
+    box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+  }
+
+  /* Outlined */
+  .sr-banner--outlined {
+    background: #fff;
+    border: 2px solid #dbeafe;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin: 0 auto;
+  }
+  .sr-banner--outlined .sr-banner__headline  { color: #0f172a; }
+  .sr-banner--outlined .sr-banner__subcopy   { color: #475569; }
+  .sr-banner--outlined .sr-banner__stat-value { color: #2463EB; }
+  .sr-banner--outlined .sr-banner__stat-label { color: #64748b; }
+  .sr-banner--outlined .sr-banner__divider   { background: #f1f5f9; }
+  .sr-banner--outlined .sr-banner__cta {
+    background: #2463EB; color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .sr-banner--outlined .sr-banner__cta:hover {
+    background: #1d56d0;
+    box-shadow: 0 4px 12px rgba(36,99,235,0.3);
+  }
+
+  /* 공통 */
+  .sr-banner__content {
+    max-width: 640px; display: flex;
+    flex-direction: column; gap: 12px;
+  }
+  .sr-banner__headline {
+    font-size: 24px; font-weight: 700;
+    line-height: 1.35; letter-spacing: -0.02em;
+  }
+  .sr-banner__subcopy { font-size: 16px; line-height: 1.6; }
+  .sr-banner__stats {
+    display: flex; align-items: center;
+    justify-content: center; gap: 32px;
+  }
+  .sr-banner__stat {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px; min-width: 100px;
+  }
+  .sr-banner__stat-value { font-size: 24px; font-weight: 700; }
+  .sr-banner__stat-label { font-size: 13px; font-weight: 500; }
+  .sr-banner__divider   { width: 1px; height: 32px; }
+
+  .sr-banner__cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px; padding: 14px 32px;
+    font-size: 15px; font-weight: 600;
+    border-radius: 12px; border: none; cursor: pointer;
+    text-decoration: none; transition: all 0.2s ease;
+  }
+  .sr-banner__cta:hover { transform: translateY(-1px); }
+  .sr-banner__cta-arrow {
+    transition: transform 0.2s ease; width: 16px; height: 16px;
+  }
+  .sr-banner__cta:hover .sr-banner__cta-arrow { transform: translateX(4px); }
+
+  @media (max-width: 640px) {
+    .sr-banner { padding: 32px 20px; gap: 24px; }
+    .sr-banner__headline { font-size: 20px; }
+    .sr-banner__subcopy  { font-size: 15px; }
+    .sr-banner__stats { display: none; }
+  }
+
+  /* ================================================================
+     사이드 슬라이드인 배너
+     ================================================================ */
+  .sr-side {
+    position: fixed;
+    bottom: 24px; left: -400px;
+    width: 340px; z-index: 9999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', sans-serif;
+    transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .sr-side.sr-side--visible { left: 24px; opacity: 1; }
+  .sr-side.sr-side--hiding  { left: -400px; opacity: 0; }
+
+  .sr-side__card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 16px;
+    position: relative;
+  }
+  .sr-side__card::before {
+    content: '';
+    position: absolute; top: 0; left: 24px; right: 24px;
+    height: 3px; background: #2463EB;
+    border-radius: 0 0 3px 3px;
+  }
+
+  .sr-side__close {
+    position: absolute; top: 12px; right: 12px;
+    width: 28px; height: 28px;
+    border: none; background: #f1f5f9;
+    border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s; color: #94a3b8;
+  }
+  .sr-side__close:hover { background: #e2e8f0; color: #475569; }
+  .sr-side__close svg { width: 14px; height: 14px; }
+
+  .sr-side__label {
+    font-size: 11px; font-weight: 700; color: #2463EB;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .sr-side__headline {
+    font-size: 17px; font-weight: 700; color: #0f172a;
+    line-height: 1.4; letter-spacing: -0.01em;
+  }
+  .sr-side__subcopy { font-size: 14px; color: #64748b; line-height: 1.55; }
+  .sr-side__cta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 12px 20px;
+    background: #2463EB; color: #fff;
+    font-size: 14px; font-weight: 600;
+    border-radius: 10px; border: none; cursor: pointer;
+    text-decoration: none; transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(36,99,235,0.2);
+  }
+  .sr-side__cta:hover {
+    background: #1d56d0;
+    box-shadow: 0 4px 12px rgba(36,99,235,0.3);
+    transform: translateY(-1px);
+  }
+  .sr-side__cta-arrow {
+    width: 14px; height: 14px;
+    transition: transform 0.2s ease;
+  }
+  .sr-side__cta:hover .sr-side__cta-arrow { transform: translateX(3px); }
+
+  @media (max-width: 768px) {
+    .sr-side { display: none !important; }
+  }
+  </style>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var CONFIG = {
+      articleSelector: '.article-body',
+      ctaLink: 'https://searchright.net/request/?utm_source=blog&utm_medium=banner&utm_campaign=bottom_cta',
+      sideShowAt: 0.5,
+    };
+
+    var BANNERS = [
+      {
+        variant: 'light',
+        headline: '아직도 채용 공고에 지원 안 하는\n66%의 인재를 놓치고 계신가요?',
+        subcopy: '서치라이트AI는 역량 메타데이터 기반 AI로 기존 플랫폼에서 검색되지 않는 핵심 인재를 발굴합니다.',
+        ctaText: '무료 상담 신청하기',
+        sideHeadline: '놓치고 있는 66%의 인재,\nAI로 찾아보세요',
+        sideSubcopy: '기존 플랫폼에서 검색되지 않는 핵심 인재를 발굴합니다.',
+        sideCtaText: '무료 상담 신청',
+      },
+      {
+        variant: 'brand',
+        headline: '검색되지 않는 인재,\nAI가 찾아드립니다',
+        subcopy: '메시지 회신율 40%, 업계 평균의 3배. 포지션에 딱 맞는 후보자 리스트를 받아보세요.',
+        ctaText: '우리 팀 채용, 상담받기',
+        sideHeadline: '회신율 40%,\n업계 평균의 3배',
+        sideSubcopy: '포지션에 딱 맞는 후보자 리스트를 받아보세요.',
+        sideCtaText: '상담받기',
+      },
+      {
+        variant: 'outlined',
+        headline: '80개+ 기업이 선택한\nAI 인재 발굴 솔루션',
+        subcopy: '헤드헌팅 대비 1/3 비용으로, 3배 더 높은 회신율. 지금 바로 경험해 보세요.',
+        ctaText: '도입 문의하기',
+        sideHeadline: '80개+ 기업이 선택한\nAI 인재 발굴',
+        sideSubcopy: '헤드헌팅 대비 1/3 비용, 3배 높은 회신율.',
+        sideCtaText: '도입 문의',
+      },
+    ];
+
+    var STATS = [
+      { value: '40%', label: '메시지 회신율' },
+      { value: '80개+', label: '누적 고객사' },
+      { value: '1/3', label: '헤드헌팅 대비 비용' },
+    ];
+
+    var ARROW = '<svg class="sr-banner__cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    var ARROW_S = '<svg class="sr-side__cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+    function createBottomHTML(data) {
+      var link = CONFIG.ctaLink + '&utm_content=bottom';
+      var h = data.headline.replace(/\n/g, '<br>');
+      var st = STATS.map(function (s, i) {
+        var d = i < STATS.length - 1 ? '<div class="sr-banner__divider"></div>' : '';
+        return '<div class="sr-banner__stat"><span class="sr-banner__stat-value">' + s.value + '</span><span class="sr-banner__stat-label">' + s.label + '</span></div>' + d;
+      }).join('');
+      return '<div class="sr-banner sr-banner--' + data.variant + '" data-sr-placement="bottom"><div class="sr-banner__content"><h2 class="sr-banner__headline">' + h + '</h2><p class="sr-banner__subcopy">' + data.subcopy + '</p></div><div class="sr-banner__stats">' + st + '</div><a href="' + link + '" class="sr-banner__cta" target="_blank" rel="noopener">' + data.ctaText + ARROW + '</a></div>';
+    }
+
+    function createSideHTML(data) {
+      var link = CONFIG.ctaLink + '&utm_content=side';
+      var h = data.sideHeadline.replace(/\n/g, '<br>');
+      return '<div class="sr-side" id="sr-side-banner"><div class="sr-side__card">' +
+        '<button class="sr-side__close" id="sr-side-close" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+        '<span class="sr-side__label">서치라이트AI</span>' +
+        '<h3 class="sr-side__headline">' + h + '</h3>' +
+        '<p class="sr-side__subcopy">' + data.sideSubcopy + '</p>' +
+        '<a href="' + link + '" class="sr-side__cta" target="_blank" rel="noopener">' + data.sideCtaText + ARROW_S + '</a>' +
+        '</div></div>';
+    }
+
+    function pickTwo() {
+      var idx = [0, 1, 2];
+      var a = idx.splice(Math.floor(Math.random() * idx.length), 1)[0];
+      var b = idx[Math.floor(Math.random() * idx.length)];
+      return { bottom: a, side: b };
+    }
+
+    function observeBottom() {
+      var el = document.querySelector('.sr-banner');
+      if (!el) return;
+      if (!('IntersectionObserver' in window)) { el.classList.add('sr-visible'); return; }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('sr-visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.15 });
+      obs.observe(el);
+    }
+
+    function initSideBanner() {
+      var sideEl = document.getElementById('sr-side-banner');
+      var closeBtn = document.getElementById('sr-side-close');
+      if (!sideEl || !closeBtn) return;
+      if (sessionStorage.getItem('sr-side-dismissed')) return;
+
+      var shown = false, dismissed = false;
+
+      function onScroll() {
+        if (dismissed) return;
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var progress = docHeight > 0 ? scrollTop / docHeight : 0;
+        if (!shown && progress >= CONFIG.sideShowAt) {
+          sideEl.classList.add('sr-side--visible');
+          shown = true;
+        }
+      }
+
+      closeBtn.addEventListener('click', function () {
+        dismissed = true;
+        sideEl.classList.remove('sr-side--visible');
+        sideEl.classList.add('sr-side--hiding');
+        sessionStorage.setItem('sr-side-dismissed', '1');
+        window.removeEventListener('scroll', onScroll);
+      });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    function init() {
+      var article = document.querySelector(CONFIG.articleSelector);
+      if (!article) return;
+      var picks = pickTwo();
+      article.insertAdjacentHTML('afterend', createBottomHTML(BANNERS[picks.bottom]));
+      observeBottom();
+      document.body.insertAdjacentHTML('beforeend', createSideHTML(BANNERS[picks.side]));
+      initSideBanner();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+
+</body>
+</html>
